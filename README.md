@@ -1,16 +1,17 @@
-# tasky
+# Tasky
+![Tasky](https://github.com/user-attachments/assets/6472fea7-4ea4-4f70-bf9d-2574cfda723e)
 
-A new Flutter project.
+# Using:
+- Flutter framework
+- Dart programming language
+- MVVM Architecture
+- Bloc state management (cubit)
+- Responsive ( Flutter Screenutil Package )
+- Animation
+- Firebase
+- Solid principles
+- Dependency injection
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+📷 Screens:
+    <img width="1700" alt="Screens" src="https://github.com/HossamShafeek/My-Coupon/assets/74622522/b91438a9-9c79-4ae1-845d-1f1c4133a912">
+![Screens](https://github.com/user-attachments/assets/41f79613-376b-4196-a527-cab393a5bde9)
