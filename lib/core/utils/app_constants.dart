@@ -68,6 +68,10 @@ class AppConstants {
       color: AppColors.grey300,
     ),
   );
+  static final OutlineInputBorder removeBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(radius8r),
+    borderSide: BorderSide.none
+  );
 
   static const SystemUiOverlayStyle systemUiOverlayStyleLight =
       SystemUiOverlayStyle(

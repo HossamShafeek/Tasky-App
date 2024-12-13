@@ -45,7 +45,7 @@ class TaskTextsFields extends StatelessWidget {
         ),
         CustomTextField(
           textInputType: TextInputType.text,
-          maxLines: 3,
+          maxLines: 8,
           controller: TaskOperationsCubit.get(context).descriptionController,
           validator: (value) {
             if (value!.trim().isEmpty) {

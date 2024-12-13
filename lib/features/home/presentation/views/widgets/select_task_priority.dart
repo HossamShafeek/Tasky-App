@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
+import 'package:tasky/core/utils/app_assets.dart';
+import 'package:tasky/core/utils/app_colors.dart';
 import 'package:tasky/core/utils/app_constants.dart';
 import 'package:tasky/core/utils/app_strings.dart';
 import 'package:tasky/core/utils/app_styles.dart';
@@ -23,16 +27,47 @@ class SelectTaskPriority extends StatelessWidget {
           ),
         ),
         CustomDropdown(
-          value:  TaskOperationsCubit.get(context).priority,
+          backgroundColor: AppColors.primaryWithOpacity,
+          value: TaskOperationsCubit.get(context).priority,
           hintText: AppStrings.choosePriority,
           messageForValidate: AppStrings.pleaseChoosePriority,
+          border: AppConstants.removeBorder,
+          focusedBorder: AppConstants.removeBorder,
+          icon: SvgPicture.asset(
+            AppAssets.arrowDown,
+            height: MediaQuery.sizeOf(context).width > 780
+                ? AppConstants.iconSize20
+                : AppConstants.iconSize24,
+            width: MediaQuery.sizeOf(context).width > 780
+                ? AppConstants.iconSize20
+                : AppConstants.iconSize24,
+          ),
           items: ['low', 'medium', 'high']
               .map(
                 (e) => DropdownMenuItem(
-              value: e,
-              child: Text(e),
-            ),
-          )
+                  value: e,
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        AppAssets.flag,
+                        height: MediaQuery.sizeOf(context).width > 780
+                            ? AppConstants.iconSize16
+                            : AppConstants.iconSize18,
+                        width: MediaQuery.sizeOf(context).width > 780
+                            ? AppConstants.iconSize16
+                            : AppConstants.iconSize18,
+                      ),
+                      Gap(AppConstants.size3w),
+                      Text(
+                        '${e[0].toUpperCase() + e.replaceRange(0, 1, '')} Priority',
+                        style: AppStyles.styleBold16Black.copyWith(
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
               .toList(),
           onChange: (value) {
             TaskOperationsCubit.get(context).priority = value;

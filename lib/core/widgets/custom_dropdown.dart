@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tasky/core/utils/app_colors.dart';
 import 'package:tasky/core/utils/app_constants.dart';
 import 'package:tasky/core/utils/app_styles.dart';
@@ -14,7 +13,7 @@ class CustomDropdown extends StatelessWidget {
     this.paddingForBottom,
     required this.messageForValidate,
     required this.items,
-    required this.onChange, this.icon,
+    required this.onChange, this.icon, this.backgroundColor, this.border, this.focusedBorder,
   });
 
   final String? Function(String?)? validator;
@@ -26,6 +25,9 @@ class CustomDropdown extends StatelessWidget {
   final List<DropdownMenuItem> items;
   final Function(dynamic value) onChange;
   final Widget? icon;
+  final Color? backgroundColor;
+  final InputBorder? border ;
+  final InputBorder? focusedBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +44,12 @@ class CustomDropdown extends StatelessWidget {
         validator: (value) => value == null ? messageForValidate : null,
         style: AppStyles.styleRegular16Black,
         decoration: InputDecoration(
-          fillColor: AppColors.white,
+          fillColor: backgroundColor??AppColors.white,
           filled: true,
           isDense: MediaQuery.sizeOf(context).width > 780 ? false : true,
           hintStyle: AppStyles.styleRegular14Grey,
-          border: AppConstants.enabledBorder,
-          focusedBorder: AppConstants.enabledBorder,
+          border: border?? AppConstants.enabledBorder,
+          focusedBorder: focusedBorder??AppConstants.enabledBorder,
         ),
         isExpanded: true,
         borderRadius: BorderRadius.circular(AppConstants.radius8r),

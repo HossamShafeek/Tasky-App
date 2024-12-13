@@ -30,6 +30,7 @@ class SelectTaskDueDate extends StatelessWidget {
               ),
             ),
             CustomTextField(
+              paddingForBottom: AppConstants.size30h,
               controller: TaskOperationsCubit.get(context).dueDateController,
               hintText:  AppStrings.chooseDueDate,
               readOnly: true,
