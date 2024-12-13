@@ -47,33 +47,39 @@ class LoginViewBody extends StatelessWidget {
               key: LoginCubit.get(context).formKey,
               child: Column(
                 children: [
-                  const BackgroundImage(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppConstants.defaultPadding),
-                    child: Column(
-                      children: [
-                        const LoginTextsFieldsSection(),
-                        CustomElevatedButton(
-                          onPressed: () {
-                            if (LoginCubit.get(context)
-                                .formKey
-                                .currentState!
-                                .validate()) {
-                              LoginCubit.get(context).login();
-                            }
-                          },
-                          title: AppStrings.signIn,
+                  const BackgroundImage(flex: 2,),
+                  Expanded(
+                    child: SingleChildScrollView(
+
+                     physics: const BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: AppConstants.defaultPadding),
+                        child: Column(
+                          children: [
+                            const LoginTextsFieldsSection(),
+                            CustomElevatedButton(
+                              onPressed: () {
+                                if (LoginCubit.get(context)
+                                    .formKey
+                                    .currentState!
+                                    .validate()) {
+                                  LoginCubit.get(context).login();
+                                }
+                              },
+                              title: AppStrings.signIn,
+                            ),
+                            TitleAndTextButton(
+                              title: AppStrings.signInSubtitle,
+                              onPressed: () {
+                                Navigator.pushNamed(context, Routes.registerView);
+                              },
+                              titleForButton: AppStrings.signIn,
+                            ),
+                            Gap(AppConstants.size20h),
+                          ],
                         ),
-                        TitleAndTextButton(
-                          title: AppStrings.signInSubtitle,
-                          onPressed: () {
-                            Navigator.pushNamed(context, Routes.registerView);
-                          },
-                          titleForButton: AppStrings.signIn,
-                        ),
-                        Gap(AppConstants.size20h),
-                      ],
+                      ),
                     ),
                   ),
                 ],
