@@ -68,7 +68,7 @@ class CustomTextField extends StatelessWidget {
               filled: true,
               isDense: true,
               hintStyle: AppStyles.styleRegular14Grey,
-              fillColor: AppColors.grey50,
+              fillColor: AppColors.white,
               border: AppConstants.enabledBorder,
               focusedBorder: AppConstants.focusedBorder,
             ),

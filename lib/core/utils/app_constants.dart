@@ -63,7 +63,10 @@ class AppConstants {
 
   static final OutlineInputBorder enabledBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(radius8r),
-    borderSide: BorderSide.none,
+    borderSide: BorderSide(
+      width: 1.1.w,
+      color: AppColors.grey300,
+    ),
   );
 
   static const SystemUiOverlayStyle systemUiOverlayStyleLight =

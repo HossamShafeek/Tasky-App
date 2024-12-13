@@ -14,7 +14,7 @@ class CustomDropdown extends StatelessWidget {
     this.paddingForBottom,
     required this.messageForValidate,
     required this.items,
-    required this.onChange,
+    required this.onChange, this.icon,
   });
 
   final String? Function(String?)? validator;
@@ -25,6 +25,7 @@ class CustomDropdown extends StatelessWidget {
   final double? paddingForBottom;
   final List<DropdownMenuItem> items;
   final Function(dynamic value) onChange;
+  final Widget? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class CustomDropdown extends StatelessWidget {
         validator: (value) => value == null ? messageForValidate : null,
         style: AppStyles.styleRegular16Black,
         decoration: InputDecoration(
-          fillColor: AppColors.grey50,
+          fillColor: AppColors.white,
           filled: true,
           isDense: MediaQuery.sizeOf(context).width > 780 ? false : true,
           hintStyle: AppStyles.styleRegular14Grey,
@@ -56,7 +57,7 @@ class CustomDropdown extends StatelessWidget {
         ),
         items: items,
         onChanged: onChange,
-        icon: Icon(
+        icon: icon??Icon(
           Icons.keyboard_arrow_down_rounded,
           size: MediaQuery.sizeOf(context).width > 780
               ? AppConstants.iconSize24

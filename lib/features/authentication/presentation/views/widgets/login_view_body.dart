@@ -47,8 +47,9 @@ class LoginViewBody extends StatelessWidget {
               key: LoginCubit.get(context).formKey,
               child: Column(
                 children: [
-                  const BackgroundImage(flex: 2,),
+                  const BackgroundImage(flex: 3,),
                   Expanded(
+                    flex: 2,
                     child: SingleChildScrollView(
 
                      physics: const BouncingScrollPhysics(),
