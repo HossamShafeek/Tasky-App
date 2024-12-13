@@ -1,16 +1,20 @@
-# tasky
+# Tasky
+![Tasky](https://github.com/user-attachments/assets/a88f25fe-74e8-4316-8dac-6b49f23bdf67)
 
-A new Flutter project.
+# Using:
+- Flutter framework
+- Dart programming language
+- MVVM Architecture
+- Bloc state management (cubit)
+- Api ( Dio Package )
+- Responsive ( Flutter Screenutil Package )
+- Animation
+- Solid principles
+- Dependency injection
+- Pagination
+- Refresh token
+- Check internet conection using dio package
 
-## Getting Started
+📷 Screens:
+![Screens](https://github.com/user-attachments/assets/cd82a7e9-c8c2-4e8c-997b-e3322f1d219d)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
