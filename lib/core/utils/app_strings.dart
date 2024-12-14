@@ -15,6 +15,9 @@ class AppStrings {
   static const String endDate = 'End Date';
   static const String delete = 'Delete';
   static const String edit = 'Edit';
+  static const String deleteTask = 'Delete Task';
+  static const String doYouWantToDeleteTheTask = 'Do you want to delete the task?';
+  static const String doYouWantToLogout = 'Do you want to logout?';
   static const String enterYourPhone = 'Enter your phone';
   static const String pleaseEnterYourPhone = 'Please enter your phone';
   static const String password = 'Password';

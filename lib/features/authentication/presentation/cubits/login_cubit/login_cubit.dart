@@ -1,7 +1,7 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:tasky/core/errors/failures.dart';
 import 'package:tasky/features/authentication/data/models/authentication_model.dart';
 import 'package:tasky/features/authentication/data/repository/authentication_repository.dart';
@@ -13,28 +13,17 @@ class LoginCubit extends Cubit<LoginState> {
   final AuthenticationRepository authenticationRepository;
 
   TextEditingController passwordController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+
 
   var formKey = GlobalKey<FormState>();
 
   static LoginCubit get(context) => BlocProvider.of(context);
 
-  Country selectedCountry = Country(
-    phoneCode: '20',
-    countryCode: 'EG',
-    e164Sc: 0,
-    geographic: true,
-    level: 1,
-    name: 'Egypt',
-    example: 'Egypt',
-    displayName: 'Egypt',
-    displayNameNoCountryCode: 'EG',
-    e164Key: '20-EG-0',
-  );
+   PhoneNumber phoneNumber=PhoneNumber(countryISOCode: '', countryCode: '', number: '');
 
-  void changeSelectedCountry({required Country country}) {
-    selectedCountry = country;
-    emit(LoginChangeSelectedCountryState());
+  void changeSelectedPhoneNumber({required PhoneNumber phoneNumber}) {
+    this.phoneNumber = phoneNumber;
+    emit(LoginChangeSelectedPhoneNumberState());
   }
 
   bool isShowPassword = true;
@@ -50,7 +39,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginLoadingState());
     Either<Failure, AuthenticationModel> result;
     result = await authenticationRepository.login(
-      phone: '+${selectedCountry.phoneCode}${phoneController.text}',
+      phone: '${phoneNumber.countryCode}${phoneNumber.number}',
       password: passwordController.text,
     );
     result.fold((failure) {

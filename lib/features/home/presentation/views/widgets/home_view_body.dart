@@ -35,7 +35,7 @@ class HomeViewBody extends StatelessWidget {
             buildWhen: (previous, current) =>
                 current is GetTasksSuccessState ||
                 current is GetTasksFailureState ||
-                current is GetTasksFailureState,
+                current is GetTasksLoadingState,
             builder: (context, state) {
               if (state is GetTasksSuccessState) {
                 return const CustomTabBar();

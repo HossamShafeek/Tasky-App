@@ -47,9 +47,9 @@ class LoginViewBody extends StatelessWidget {
               key: LoginCubit.get(context).formKey,
               child: Column(
                 children: [
-                  const BackgroundImage(flex: 3,),
+                  const BackgroundImage(flex: 4,),
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: SingleChildScrollView(
 
                      physics: const BouncingScrollPhysics(),
@@ -65,7 +65,11 @@ class LoginViewBody extends StatelessWidget {
                                     .formKey
                                     .currentState!
                                     .validate()) {
-                                  LoginCubit.get(context).login();
+                                  if(LoginCubit.get(context).phoneNumber.number.isNotEmpty){
+                                    LoginCubit.get(context).login();
+                                  }else{
+                                    showErrorSnackBar(context: context, message: AppStrings.pleaseEnterYourPhone);
+                                  }
                                 }
                               },
                               title: AppStrings.signIn,

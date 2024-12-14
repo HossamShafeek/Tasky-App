@@ -20,5 +20,5 @@ class LoginFailureState extends LoginState {
 }
 
 class LoginChangePasswordVisibilityState extends LoginState {}
-class LoginChangeSelectedCountryState extends LoginState {}
+class LoginChangeSelectedPhoneNumberState extends LoginState {}
 

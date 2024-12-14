@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tasky/config/icons/icons_broken.dart';
 import 'package:tasky/config/routes/app_routes.dart';
 import 'package:tasky/core/functions/logout.dart';
+import 'package:tasky/core/functions/show_custom_dialog.dart';
 import 'package:tasky/core/utils/app_constants.dart';
+import 'package:tasky/core/utils/app_strings.dart';
 import 'package:tasky/core/widgets/logo_text_widget.dart';
 import 'package:tasky/features/home/presentation/cubits/tasks_cubit/tasks_cubit.dart';
 import 'package:tasky/features/home/presentation/views/widgets/floating_action_buttons_section.dart';
@@ -46,7 +48,15 @@ class _HomeViewState extends State<HomeView> {
           ),
           IconButton(
             onPressed: () {
-              logout(context: context);
+              showCustomDialog(
+                  context: context,
+                  title: AppStrings.logout,
+                  content: AppStrings.doYouWantToLogout,
+                  actionTitle: AppStrings.logout,
+                  action: () {
+                    logout(context: context);
+                  });
+
             },
             icon: Icon(
               IconBroken.Logout,

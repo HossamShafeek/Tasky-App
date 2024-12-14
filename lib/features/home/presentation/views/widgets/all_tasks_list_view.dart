@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tasky/core/shimmer/shimmer_task_list_view_item.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tasky/core/functions/show_snack_bar.dart';
 import 'package:tasky/core/utils/app_assets.dart';
 import 'package:tasky/core/utils/app_constants.dart';
 import 'package:tasky/core/utils/app_strings.dart';
@@ -15,7 +16,14 @@ class AllTasksListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TasksCubit, TasksState>(
+    return BlocConsumer<TasksCubit, TasksState>(
+      listener: (context, state) {
+        if(state is GetTasksSuccessState){
+          if(state.tasks.isEmpty){
+            showInfoSnackBar(context: context, message: 'There are no more tasks!');
+          }
+        }
+      },
       builder: (context, state) {
         if (TasksCubit.get(context).tasks.isNotEmpty) {
           return NotificationListener<ScrollNotification>(
@@ -30,15 +38,21 @@ class AllTasksListView extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(
-                      top: AppConstants.size5h,
-                      bottom: AppConstants.size10h,
-                    ),
-                    itemCount: TasksCubit.get(context).tasks.length,
-                    itemBuilder: (context, index) => TaskListViewItem(
-                      taskModel: TasksCubit.get(context).tasks[index],
+                  child: RefreshIndicator(
+                   onRefresh: ()async{
+                     TasksCubit.get(context).pageNumber=1;
+                     TasksCubit.get(context).getTasks();
+                   },
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      padding: EdgeInsets.only(
+                        top: AppConstants.size5h,
+                        bottom: AppConstants.size10h,
+                      ),
+                      itemCount: TasksCubit.get(context).tasks.length,
+                      itemBuilder: (context, index) => TaskListViewItem(
+                        taskModel: TasksCubit.get(context).tasks[index],
+                      ),
                     ),
                   ),
                 ),
@@ -46,7 +60,10 @@ class AllTasksListView extends StatelessWidget {
                   buildWhen: (previous, current) => current is GetTasksLoadingFromPaginationState||current is GetTasksSuccessState||current is GetTasksFailureState,
                   builder: (context, state) {
                     if(state is GetTasksLoadingFromPaginationState){
-                      return const ShimmerTaskListViewItem();
+                       return Lottie.asset(
+                        AppAssets.loading,
+                         height: AppConstants.size45h,
+                      );
                     }else if(state is GetTasksFailureState){
                       return CustomErrorWidget(error: state.error);
                     }

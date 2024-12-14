@@ -29,7 +29,11 @@ class TasksCubit extends Cubit<TasksState> {
     result.fold((error) {
       emit(GetTasksFailureState(error.error));
     }, (tasks) {
-      if(tasks.isNotEmpty){
+      if(pageNumber ==1){
+        this.tasks = tasks;
+        pageNumber++;
+      }
+      else if(tasks.isNotEmpty){
         this.tasks.addAll(tasks);
         pageNumber++;
       }

@@ -17,4 +17,5 @@ abstract class AppAssets {
   static String calendar = '${AppConstants.path}calendar.svg';
   static String scan = '${AppConstants.path}scan.svg';
   static String addImage = '${AppConstants.path}add_image.svg';
+  static String loading = '${AppConstants.path}loading.json';
 }

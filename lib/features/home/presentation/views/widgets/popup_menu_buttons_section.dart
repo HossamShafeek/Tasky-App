@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasky/config/routes/app_routes.dart';
+import 'package:tasky/core/functions/show_custom_dialog.dart';
 import 'package:tasky/core/utils/app_colors.dart';
 import 'package:tasky/core/utils/app_constants.dart';
 import 'package:tasky/core/utils/app_strings.dart';
@@ -26,7 +27,15 @@ class PopupMenuButtonsSection extends StatelessWidget {
         if (value ==  AppStrings.edit) {
           Navigator.pushNamed(context, Routes.updateTaskView,arguments: taskModel);
         } else if (value ==  AppStrings.delete) {
-          TaskOperationsCubit.get(context).deleteTask(taskId: taskModel.id);
+          showCustomDialog(
+              context: context,
+              title: AppStrings.deleteTask,
+              content: AppStrings.doYouWantToDeleteTheTask,
+              actionTitle: AppStrings.delete,
+              action: () {
+                Navigator.pop(context);
+                TaskOperationsCubit.get(context).deleteTask(taskId: taskModel.id);
+              });
         }
       },
       itemBuilder: (BuildContext context) {

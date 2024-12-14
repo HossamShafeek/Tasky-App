@@ -53,12 +53,13 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   flutter_staggered_grid_view: ^0.7.0
   image_picker: ^1.1.2
-  country_picker: ^2.0.25
+  intl_phone_field: ^3.2.0
   pretty_dio_logger: ^1.4.0
   qr_code_scanner_plus: ^2.0.6
   qr_flutter: ^4.1.0
   dotted_border: ^2.1.0
-  # Space
+  lottie:
+# Space
   gap: ^3.0.1
 
 dev_dependencies:

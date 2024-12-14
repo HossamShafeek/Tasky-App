@@ -20,5 +20,5 @@ class RegisterFailureState extends RegisterState {
 
 class RegisterChangePasswordVisibilityState extends RegisterState {}
 
-class RegisterChangeSelectedCountryState extends RegisterState {}
+class RegisterChangeSelectedPhoneNumberState extends RegisterState {}
 class RegisterSelectExperienceLevelState extends RegisterState {}

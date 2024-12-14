@@ -72,7 +72,7 @@ class AddTaskImage extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 clipBehavior: Clip.antiAlias,
-                height: AppConstants.size45h,
+                height: TaskOperationsCubit.get(context).image==null? AppConstants.size45h:MediaQuery.sizeOf(context).height / 3.4,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppConstants.radius10r),
                 ),

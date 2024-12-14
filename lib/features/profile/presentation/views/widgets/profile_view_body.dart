@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tasky/core/functions/svae_coupon_to_clipboard.dart';
+import 'package:tasky/core/functions/svae_to_clipboard.dart';
 import 'package:tasky/core/utils/app_assets.dart';
 import 'package:tasky/core/utils/app_constants.dart';
 import 'package:tasky/features/profile/data/models/profile_model/profile_model.dart';
@@ -28,7 +28,7 @@ class ProfileViewBody extends StatelessWidget {
             subtitle: profileModel.username,
             trailing: IconButton(
               onPressed: () {
-                saveCouponCodeToClipboard(
+                saveToClipboard(
                   context: context,
                    phone: profileModel.username,
                 );

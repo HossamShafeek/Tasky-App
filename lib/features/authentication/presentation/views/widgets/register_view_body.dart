@@ -61,7 +61,11 @@ class RegisterViewBody extends StatelessWidget {
                                     .formKey
                                     .currentState!
                                     .validate()) {
-                                  RegisterCubit.get(context).register();
+                                  if(RegisterCubit.get(context).phoneNumber.number.isNotEmpty){
+                                    RegisterCubit.get(context).register();
+                                  }else{
+                                    showErrorSnackBar(context: context, message: AppStrings.pleaseEnterYourPhone);
+                                  }
                                 }
                               },
                               title:

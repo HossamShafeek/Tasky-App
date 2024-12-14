@@ -1,7 +1,7 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:tasky/config/icons/icons_broken.dart';
 import 'package:tasky/core/utils/app_colors.dart';
 import 'package:tasky/core/utils/app_constants.dart';
@@ -10,7 +10,7 @@ import 'package:tasky/core/utils/app_styles.dart';
 import 'package:tasky/core/widgets/custom_text_field.dart';
 import 'package:tasky/features/authentication/presentation/cubits/login_cubit/login_cubit.dart';
 import 'package:tasky/features/authentication/presentation/cubits/login_cubit/login_state.dart';
-import 'package:tasky/features/authentication/presentation/views/widgets/select_country_widget.dart';
+import 'package:tasky/features/authentication/presentation/views/widgets/select_phone_number_widget.dart';
 
 class LoginTextsFieldsSection extends StatelessWidget {
   const LoginTextsFieldsSection({super.key});
@@ -28,29 +28,10 @@ class LoginTextsFieldsSection extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             Gap(AppConstants.size15h),
-            CustomTextField(
-              textInputType: TextInputType.phone,
-              controller: LoginCubit.get(context).phoneController,
-              suffixIcon: Icon(
-                IconBroken.Call,
-                size: MediaQuery.sizeOf(context).width > 780
-                    ? AppConstants.iconSize14
-                    : AppConstants.iconSize18,
-              ),
-              prefixIcon: SelectCountryWidget(
-                onSelect: (Country country) {
-                  LoginCubit.get(context)
-                      .changeSelectedCountry(country: country);
-                },
-                country: LoginCubit.get(context).selectedCountry,
-              ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return AppStrings.pleaseEnterYourPhone;
-                }
-                return null;
+            SelectPhoneNumberWidget(
+              onChanged: (PhoneNumber phoneNumber) {
+                LoginCubit.get(context).changeSelectedPhoneNumber(phoneNumber: phoneNumber);
               },
-              hintText: AppStrings.enterYourPhone,
             ),
             CustomTextField(
               textInputType: TextInputType.visiblePassword,

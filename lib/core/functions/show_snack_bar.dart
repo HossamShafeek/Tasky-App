@@ -27,3 +27,16 @@ void showErrorSnackBar({
     ),
   );
 }
+
+void showInfoSnackBar({
+  required BuildContext context,
+  required String message,
+}) {
+  showTopSnackBar(
+    displayDuration: const Duration(seconds: 2),
+    Overlay.of(context),
+    CustomSnackBar.info(
+      message: message,
+    ),
+  );
+}
