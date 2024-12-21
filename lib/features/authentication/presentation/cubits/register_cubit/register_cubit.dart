@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:tasky/core/errors/failures.dart';
-import 'package:tasky/features/authentication/data/models/authentication_model.dart';
-import 'package:tasky/features/authentication/data/repository/authentication_repository.dart';
+import 'package:tasky/features/authentication/domain/entities/authentication_entity.dart';
+import 'package:tasky/features/authentication/domain/repository/authentication_repository.dart';
+import 'package:tasky/features/authentication/domain/use_cases/register_use_case.dart';
 import 'package:tasky/features/authentication/presentation/cubits/register_cubit/register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit(this.authenticationRepository) : super(RegisterInitialState());
+  RegisterCubit({required this.registerUseCase}) : super(RegisterInitialState());
 
-  final AuthenticationRepository authenticationRepository;
+  final RegisterUseCase registerUseCase;
 
   TextEditingController fullNameController = TextEditingController();
   TextEditingController experienceYearsController = TextEditingController();
@@ -41,24 +42,26 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(RegisterSelectExperienceLevelState());
   }
 
-  AuthenticationModel? registerModel;
+  AuthenticationEntity? registerEntity;
 
   Future<void> register() async {
     emit(RegisterLoadingState());
-    Either<Failure, AuthenticationModel> result;
-    result = await authenticationRepository.register(
-      fullName: fullNameController.text,
+    Either<Failure, AuthenticationEntity> result;
+    result = await registerUseCase.call(
+     RegisterParams(
+       fullName: fullNameController.text,
       phone: '${phoneNumber.countryCode}${phoneNumber.number}',
       password: passwordController.text,
       address: addressController.text,
       experienceYears: double.parse(experienceYearsController.text),
       experienceLevel: experienceLevel,
+     ),
     );
     result.fold((failure) {
       emit(RegisterFailureState(failure.error));
-    }, (registerModel) {
-      this.registerModel = registerModel;
-      emit(RegisterSuccessState(registerModel));
+    }, (registerEntity) {
+      this.registerEntity = registerEntity;
+      emit(RegisterSuccessState(registerEntity));
     });
   }
 }

@@ -1,4 +1,4 @@
-import 'package:tasky/features/home/data/models/task_model/task_model.dart';
+import 'package:tasky/features/home/domain/entities/task_entity.dart';
 
 abstract class TasksState{
 
@@ -9,7 +9,7 @@ class TasksInitialState extends TasksState{}
 class GetTasksLoadingState extends TasksState {}
 
 class GetTasksSuccessState extends TasksState {
-  final List<TaskModel> tasks;
+  final List<TaskEntity> tasks;
 
   GetTasksSuccessState(this.tasks);
 }
@@ -27,7 +27,7 @@ class GetTasksLoadingFromPaginationState extends TasksState {}
 class GetTaskByIdLoadingState extends TasksState {}
 
 class GetTaskByIdSuccessState extends TasksState {
-  final TaskModel task;
+  final TaskEntity task;
 
   GetTaskByIdSuccessState(this.task);
 }

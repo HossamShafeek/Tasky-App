@@ -8,7 +8,7 @@ import 'package:tasky/features/authentication/presentation/cubits/login_cubit/lo
 import 'package:tasky/features/authentication/presentation/cubits/register_cubit/register_cubit.dart';
 import 'package:tasky/features/authentication/presentation/views/login_view.dart';
 import 'package:tasky/features/authentication/presentation/views/register_view.dart';
-import 'package:tasky/features/home/data/models/task_model/task_model.dart';
+import 'package:tasky/features/home/domain/entities/task_entity.dart';
 import 'package:tasky/features/home/presentation/cubits/tab_bar_cubit/tab_bar_cubit.dart';
 import 'package:tasky/features/home/presentation/cubits/task_operations_cubit/task_operations_cubit.dart';
 import 'package:tasky/features/home/presentation/cubits/tasks_cubit/tasks_cubit.dart';
@@ -102,12 +102,12 @@ class AppRoutes {
               child: const ProfileView()),
         );
       case Routes.taskDetailsView:
-        TaskModel taskModel = settings.arguments as TaskModel;
+        TaskEntity taskModel = settings.arguments as TaskEntity;
         return PageSlideTransition(
           direction: AxisDirection.left,
           page: BlocProvider(
               create: (context) => getIt.get<TaskOperationsCubit>(),
-              child: TaskDetailsView(taskModel: taskModel)),
+              child: TaskDetailsView(taskEntity: taskModel)),
         );
       case Routes.scanView:
         final BuildContext contextForBloc = settings.arguments as BuildContext;
@@ -129,12 +129,12 @@ class AppRoutes {
           ),
         );
         case Routes.updateTaskView:
-          final TaskModel taskModel =settings.arguments as TaskModel;
+          final TaskEntity taskModel =settings.arguments as TaskEntity;
         return PageSlideTransition(
           direction: AxisDirection.left,
           page: BlocProvider(
             create:  (context) => getIt.get<TaskOperationsCubit>(),
-            child:  UpdateTaskView(taskModel: taskModel),
+            child:  UpdateTaskView(taskEntity: taskModel),
           ),
         );
     }

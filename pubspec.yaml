@@ -59,6 +59,7 @@ dependencies:
   qr_flutter: ^4.1.0
   dotted_border: ^2.1.0
   lottie:
+  liquid_pull_to_refresh: ^3.0.1
 # Space
   gap: ^3.0.1
 

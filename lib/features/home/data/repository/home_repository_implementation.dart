@@ -1,28 +1,21 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:tasky/core/api/api_services.dart';
-import 'package:tasky/core/api/end_points.dart';
 import 'package:tasky/core/errors/failures.dart';
-import 'package:tasky/features/home/data/models/task_model/task_model.dart';
-import 'package:tasky/features/home/data/repository/home_repository.dart';
+import 'package:tasky/features/home/data/date_source/home_remote_data_source.dart';
+import 'package:tasky/features/home/domain/entities/task_entity.dart';
+import 'package:tasky/features/home/domain/repository/home_repository.dart';
 
 class HomeRepositoryImplementation extends HomeRepository {
-  final ApiServices apiServices;
+  final HomeRemoteDataSource homeRemoteDataSource;
 
-  HomeRepositoryImplementation(this.apiServices);
+  HomeRepositoryImplementation({required this.homeRemoteDataSource});
 
   @override
-  Future<Either<Failure, List<TaskModel>>> getTasks(
+  Future<Either<Failure, List<TaskEntity>>> getTasks(
       {required int pageNumber}) async {
     try {
-      Response data = await apiServices.get(
-        endPoint: '${EndPoints.getTasks}$pageNumber',
-      );
-      List<TaskModel> tasks = (data.data as List<dynamic>).map((task) {
-        return TaskModel.fromJson(task);
-      }).toList();
+      List<TaskEntity> tasks = await homeRemoteDataSource.getTasks(pageNumber: pageNumber);
       return Right(tasks);
     } catch (error) {
       if (error is DioException) {
@@ -34,13 +27,10 @@ class HomeRepositoryImplementation extends HomeRepository {
   }
 
   @override
-  Future<Either<Failure, TaskModel>> getTaskById(
+  Future<Either<Failure, TaskEntity>> getTaskById(
       {required String taskId}) async {
     try {
-      Response data = await apiServices.get(
-        endPoint: '${EndPoints.getTaskById}$taskId',
-      );
-      TaskModel task = TaskModel.fromJson(data.data);
+      TaskEntity task = await homeRemoteDataSource.getTaskById(taskId: taskId);
       return Right(task);
     } catch (error) {
       if (error is DioException) {
@@ -54,19 +44,8 @@ class HomeRepositoryImplementation extends HomeRepository {
   @override
   Future<Either<Failure, String>> uploadImage({required File image}) async {
     try {
-      FormData formData = FormData();
-      formData.files.add(MapEntry(
-          'image',
-          await MultipartFile.fromFile(
-            image.path,
-            filename: image.path.split('/').last,
-            contentType:
-                DioMediaType.parse("image/${image.path.split('.').last}"),
-          )));
-
-      final response = await apiServices.post(
-          endPoint: EndPoints.uploadImage, data: formData);
-      return right(response.data['image']);
+      String imagePath = await homeRemoteDataSource.uploadImage(image: image);
+      return Right(imagePath);
     } catch (error) {
       if (error is DioException) {
         return Left(ServerFailure.fromDioException(error));
@@ -78,21 +57,11 @@ class HomeRepositoryImplementation extends HomeRepository {
 
   @override
   Future<Either<Failure, String>> addTask({
-    required String title,
-    required String description,
-    required String priority,
-    required String dueDate,
-    required String image,
+    required AddTaskParams addTaskParams,
   }) async {
     try {
-      await apiServices.post(endPoint: EndPoints.addTask, data: {
-        'title': title,
-        'desc': description,
-        'image': image,
-        'priority': priority,
-        'dueDate': dueDate,
-      });
-      return right('Added task successfully');
+     String addTaskMessage = await homeRemoteDataSource.addTask(addTaskParams: addTaskParams);
+      return Right(addTaskMessage);
     } catch (error) {
       if (error is DioException) {
         return Left(ServerFailure.fromDioException(error));
@@ -104,22 +73,10 @@ class HomeRepositoryImplementation extends HomeRepository {
 
   @override
   Future<Either<Failure, String>> updateTask({
-    required String title,
-    required String description,
-    required String priority,
-    required String status,
-    required String image,
-    required String taskId,
-  }) async {
+    required UpdateTaskParams updateTaskParams,})async{
     try {
-      await apiServices.put(endPoint: EndPoints.updateTask+taskId, data: {
-        'title': title,
-        'desc': description,
-        'image': image,
-        'priority': priority,
-        'status': status,
-      });
-      return right('Update task successfully');
+     String updateTaskMessage = await homeRemoteDataSource.updateTask(updateTaskParams: updateTaskParams);
+      return Right(updateTaskMessage);
     } catch (error) {
       if (error is DioException) {
         return Left(ServerFailure.fromDioException(error));
@@ -132,8 +89,8 @@ class HomeRepositoryImplementation extends HomeRepository {
   @override
   Future<Either<Failure, String>> deleteTask({required String taskId}) async{
     try {
-      await apiServices.delete(endPoint: EndPoints.deleteTask+taskId);
-      return right('Delete task successfully');
+    String deleteTaskMessage = await homeRemoteDataSource.deleteTask(taskId: taskId);
+    return Right(deleteTaskMessage);
     } catch (error) {
       if (error is DioException) {
         return Left(ServerFailure.fromDioException(error));

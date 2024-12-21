@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:tasky/core/shimmer/shimmer_container_effect.dart';
 import 'package:tasky/core/shimmer/shimmer_task_list_view_item.dart';

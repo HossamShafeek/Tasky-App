@@ -1,24 +1,19 @@
-class TaskModel {
-  final String id;
-  final String? image;
-  final String title;
-  final String description;
-  final String priority;
-  final String status;
+import 'package:tasky/features/home/domain/entities/task_entity.dart';
+
+class TaskModel extends TaskEntity{
   final String userId;
-  final String createdAt;
   final String updatedAt;
   final num? v;
 
   TaskModel({
-    required  this.id,
-     this.image,
-    required this.title,
-    required this.description,
-    required this.priority,
-    required this.status,
+    required  super.id,
+     super.image,
+    required super.title,
+    required super.description,
+    required super.priority,
+    required super.status,
     required this.userId,
-    required  this.createdAt,
+    required  super.createdAt,
     required  this.updatedAt,
     this.v,
   });

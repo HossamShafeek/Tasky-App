@@ -5,7 +5,7 @@ import 'package:tasky/core/utils/app_strings.dart';
 import 'package:tasky/core/widgets/custom_back_button.dart';
 import 'package:tasky/features/home/presentation/cubits/task_operations_cubit/task_operations_cubit.dart';
 import 'package:tasky/features/home/presentation/cubits/task_operations_cubit/task_operations_state.dart';
-import 'package:tasky/features/home/presentation/views/widgets/add_task_view_body.dart';
+import 'package:tasky/features/home/presentation/widgets/add_task_view_body.dart';
 
 class AddTaskView extends StatefulWidget {
   const AddTaskView({super.key});

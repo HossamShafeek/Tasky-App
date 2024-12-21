@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasky/core/utils/app_constants.dart';
-import 'package:tasky/features/authentication/presentation/views/widgets/login_view_body.dart';
+import 'package:tasky/features/authentication/presentation/widgets/login_view_body.dart';
 
 
 class LoginView extends StatelessWidget {

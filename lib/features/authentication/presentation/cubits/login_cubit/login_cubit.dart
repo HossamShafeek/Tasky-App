@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:tasky/core/errors/failures.dart';
-import 'package:tasky/features/authentication/data/models/authentication_model.dart';
-import 'package:tasky/features/authentication/data/repository/authentication_repository.dart';
+import 'package:tasky/features/authentication/domain/entities/authentication_entity.dart';
+import 'package:tasky/features/authentication/domain/repository/authentication_repository.dart';
+import 'package:tasky/features/authentication/domain/use_cases/login_use_case.dart';
 import 'package:tasky/features/authentication/presentation/cubits/login_cubit/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this.authenticationRepository) : super(LoginInitialState());
+  LoginCubit({required this.loginUseCase}) : super(LoginInitialState());
 
-  final AuthenticationRepository authenticationRepository;
+  final LoginUseCase loginUseCase;
 
   TextEditingController passwordController = TextEditingController();
 
@@ -33,20 +34,22 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginChangePasswordVisibilityState());
   }
 
-  AuthenticationModel? loginModel;
+  AuthenticationEntity? loginEntity;
 
   Future<void> login() async {
     emit(LoginLoadingState());
-    Either<Failure, AuthenticationModel> result;
-    result = await authenticationRepository.login(
-      phone: '${phoneNumber.countryCode}${phoneNumber.number}',
+    Either<Failure, AuthenticationEntity> result;
+    result = await loginUseCase.call(
+      LoginParams(
+          phone: '${phoneNumber.countryCode}${phoneNumber.number}',
       password: passwordController.text,
+         ),
     );
     result.fold((failure) {
       emit(LoginFailureState(failure.error));
-    }, (loginModel) {
-      this.loginModel = loginModel;
-      emit(LoginSuccessState(loginModel));
+    }, (loginEntity) {
+      this.loginEntity = loginEntity;
+      emit(LoginSuccessState(loginEntity));
     });
   }
 }

@@ -1,10 +1,10 @@
 
-class AuthenticationModel {
-  String accessToken;
-  String refreshToken;
-  String id;
+import 'package:tasky/features/authentication/domain/entities/authentication_entity.dart';
 
-  AuthenticationModel({required this.accessToken,required this.refreshToken,required this.id});
+class AuthenticationModel extends AuthenticationEntity {
+ 
+
+  AuthenticationModel({required super.accessToken,required super.refreshToken,required super.id,});
 
   factory AuthenticationModel.fromJson(Map<String, dynamic> json) {
     return AuthenticationModel(

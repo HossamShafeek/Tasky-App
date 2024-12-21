@@ -1,5 +1,5 @@
 
-import 'package:tasky/features/profile/data/models/profile_model/profile_model.dart';
+import 'package:tasky/features/profile/domain/entities/profile_entity.dart';
 
 abstract class ProfileState {}
 
@@ -8,7 +8,7 @@ class ProfileInitialState extends ProfileState {}
 class GetUserProfileLoadingState extends ProfileState {}
 
 class GetUserProfileSuccessState extends ProfileState {
-  final ProfileModel profileModel;
+  final ProfileEntity profileModel;
 
   GetUserProfileSuccessState(this.profileModel);
 }

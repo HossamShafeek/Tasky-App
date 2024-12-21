@@ -8,8 +8,8 @@ import 'package:tasky/core/utils/app_constants.dart';
 import 'package:tasky/core/utils/app_strings.dart';
 import 'package:tasky/core/widgets/logo_text_widget.dart';
 import 'package:tasky/features/home/presentation/cubits/tasks_cubit/tasks_cubit.dart';
-import 'package:tasky/features/home/presentation/views/widgets/floating_action_buttons_section.dart';
-import 'package:tasky/features/home/presentation/views/widgets/home_view_body.dart';
+import 'package:tasky/features/home/presentation/widgets/floating_action_buttons_section.dart';
+import 'package:tasky/features/home/presentation/widgets/home_view_body.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

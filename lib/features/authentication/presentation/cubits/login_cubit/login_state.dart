@@ -1,5 +1,5 @@
 
-import 'package:tasky/features/authentication/data/models/authentication_model.dart';
+import 'package:tasky/features/authentication/domain/entities/authentication_entity.dart';
 
 abstract class LoginState {}
 
@@ -8,9 +8,9 @@ class LoginInitialState extends LoginState {}
 class LoginLoadingState extends LoginState {}
 
 class LoginSuccessState extends LoginState {
-  final AuthenticationModel loginModel;
+  final AuthenticationEntity loginEntity;
 
-  LoginSuccessState(this.loginModel);
+  LoginSuccessState(this.loginEntity);
 }
 
 class LoginFailureState extends LoginState {

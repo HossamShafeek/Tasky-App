@@ -1,38 +1,22 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:tasky/core/api/api_services.dart';
-import 'package:tasky/core/api/api_services_implementation.dart';
-import 'package:tasky/core/api/end_points.dart';
 import 'package:tasky/core/errors/failures.dart';
-import 'package:tasky/features/authentication/data/models/authentication_model.dart';
-import 'package:tasky/features/authentication/data/repository/authentication_repository.dart';
+import 'package:tasky/features/authentication/data/data_source/authentication_remote_data_source.dart';
+import 'package:tasky/features/authentication/domain/entities/authentication_entity.dart';
+import 'package:tasky/features/authentication/domain/repository/authentication_repository.dart';
 
 class AuthenticationRepositoryImplementation extends AuthenticationRepository {
-  final ApiServices apiServices;
+  final AuthenticationRemoteDataSource authenticationRemoteDataSource;
 
-  AuthenticationRepositoryImplementation(this.apiServices);
+  AuthenticationRepositoryImplementation({required this.authenticationRemoteDataSource});
 
   @override
-  Future<Either<Failure, AuthenticationModel>> register({
-    required String fullName,
-    required String phone,
-    required String address,
-    required num experienceYears,
-    required String experienceLevel,
-    required String password,
+  Future<Either<Failure, AuthenticationEntity>> register({
+    required RegisterParams registerParams,
   }) async {
     try {
-      Response data =
-          await apiServices.post(endPoint:  EndPoints.register, data: {
-        'displayName': fullName,
-        'phone': phone,
-        'password': password,
-        'experienceYears': experienceYears,
-        'level': experienceLevel,
-        'address': address,
-      });
-
-      return Right(AuthenticationModel.fromJson(data.data));
+     AuthenticationEntity authenticationEntity = await authenticationRemoteDataSource.register(registerParams: registerParams);
+      return Right(authenticationEntity);
     } catch (error) {
       if (error is DioException) {
         return Left(ServerFailure.fromDioException(error));
@@ -43,19 +27,12 @@ class AuthenticationRepositoryImplementation extends AuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, AuthenticationModel>> login({
-    required String phone,
-    required String password,
+  Future<Either<Failure, AuthenticationEntity>> login({
+    required LoginParams loginParams,
   }) async {
     try {
-      Response data = await apiServices.post(
-        endPoint:  EndPoints.login,
-        data: {
-          'phone': phone,
-          'password': password,
-        },
-      );
-      return Right(AuthenticationModel.fromJson(data.data));
+      AuthenticationEntity authenticationEntity = await authenticationRemoteDataSource.login(loginParams: loginParams);
+      return Right(authenticationEntity);
     } catch (error) {
       if (error is DioException) {
         return Left(ServerFailure.fromDioException(error));

@@ -33,7 +33,7 @@ class _ProfileViewState extends State<ProfileView> {
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
           if (state is GetUserProfileSuccessState) {
-            return ProfileViewBody(profileModel: state.profileModel);
+            return ProfileViewBody(profileEntity: state.profileModel);
           } else if (state is GetUserProfileFailureState) {
             if(state.error.contains('internet connection')){
               return NoInternetWidget(onPressed: (){

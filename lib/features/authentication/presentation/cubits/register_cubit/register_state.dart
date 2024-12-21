@@ -1,4 +1,4 @@
-import 'package:tasky/features/authentication/data/models/authentication_model.dart';
+import 'package:tasky/features/authentication/domain/entities/authentication_entity.dart';
 
 abstract class RegisterState {}
 
@@ -7,9 +7,9 @@ class RegisterInitialState extends RegisterState {}
 class RegisterLoadingState extends RegisterState {}
 
 class RegisterSuccessState extends RegisterState {
-  final AuthenticationModel registerModel;
+  final AuthenticationEntity registerEntity;
 
-  RegisterSuccessState(this.registerModel);
+  RegisterSuccessState(this.registerEntity);
 }
 
 class RegisterFailureState extends RegisterState {

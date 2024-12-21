@@ -2,18 +2,27 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasky/core/errors/failures.dart';
-import 'package:tasky/features/home/data/models/task_model/task_model.dart';
-import 'package:tasky/features/home/data/repository/home_repository.dart';
+import 'package:tasky/features/home/domain/entities/task_entity.dart';
+import 'package:tasky/features/home/domain/use_cases/get_task_by_id_use_case.dart';
+import 'package:tasky/features/home/domain/use_cases/get_tasks_use_case.dart';
 import 'package:tasky/features/home/presentation/cubits/tasks_cubit/tasks_state.dart';
 
-class TasksCubit extends Cubit<TasksState> {
-  final HomeRepository homeRepository;
 
-  TasksCubit(this.homeRepository) : super(TasksInitialState());
+class TasksCubitParams{
+  final GetTasksUseCase getTasksUseCase;
+  final GetTaskByIdUseCase getTaskByIdUseCase;
+
+  TasksCubitParams({required this.getTasksUseCase, required this.getTaskByIdUseCase});
+}
+
+class TasksCubit extends Cubit<TasksState> {
+  final TasksCubitParams tasksCubitParams;
+
+  TasksCubit({required this.tasksCubitParams}) : super(TasksInitialState());
 
   static TasksCubit get(BuildContext context) => BlocProvider.of(context);
 
-  List<TaskModel> tasks = [];
+  List<TaskEntity> tasks = [];
 
 
   int pageNumber = 1;
@@ -24,8 +33,8 @@ class TasksCubit extends Cubit<TasksState> {
     }else{
       emit(GetTasksLoadingFromPaginationState());
     }
-    Either<Failure, List<TaskModel>> result =
-        await homeRepository.getTasks(pageNumber: pageNumber);
+    Either<Failure, List<TaskEntity>> result =
+        await tasksCubitParams.getTasksUseCase.call(pageNumber);
     result.fold((error) {
       emit(GetTasksFailureState(error.error));
     }, (tasks) {
@@ -41,15 +50,15 @@ class TasksCubit extends Cubit<TasksState> {
     });
   }
 
-  List<TaskModel> inProgress = [];
-  List<TaskModel> waiting = [];
-  List<TaskModel> finished = [];
+  List<TaskEntity> inProgress = [];
+  List<TaskEntity> waiting = [];
+  List<TaskEntity> finished = [];
 
   void filterTasksList(){
     inProgress=[];
     waiting=[];
     finished=[];
-    for (TaskModel task in tasks) {
+    for (TaskEntity task in tasks) {
       switch(task.status.toLowerCase().replaceAll(' ', '')){
         case 'inprogress':
           inProgress.add(task);
@@ -61,12 +70,12 @@ class TasksCubit extends Cubit<TasksState> {
     }
   }
 
-  TaskModel? taskById ;
+  TaskEntity? taskById ;
 
   Future<void> getTaskById({required String taskId}) async {
       emit(GetTaskByIdLoadingState());
-    Either<Failure, TaskModel> result =
-    await homeRepository.getTaskById(taskId: taskId);
+    Either<Failure, TaskEntity> result =
+    await tasksCubitParams.getTaskByIdUseCase.call(taskId);
     result.fold((error) {
       emit(GetTaskByIdFailureState(error.error));
     }, (task) {

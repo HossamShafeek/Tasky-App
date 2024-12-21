@@ -3,13 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tasky/core/functions/svae_to_clipboard.dart';
 import 'package:tasky/core/utils/app_assets.dart';
 import 'package:tasky/core/utils/app_constants.dart';
-import 'package:tasky/features/profile/data/models/profile_model/profile_model.dart';
+import 'package:tasky/features/profile/domain/entities/profile_entity.dart';
 import 'package:tasky/features/profile/presentation/views/widgets/profile_item_widget.dart';
 
 class ProfileViewBody extends StatelessWidget {
-  const ProfileViewBody({super.key, required this.profileModel});
+  const ProfileViewBody({super.key, required this.profileEntity});
 
-  final ProfileModel profileModel;
+  final ProfileEntity profileEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +21,16 @@ class ProfileViewBody extends StatelessWidget {
         children: [
           ProfileItemWidget(
             title: 'NAME',
-            subtitle: profileModel.displayName,
+            subtitle: profileEntity.displayName,
           ),
           ProfileItemWidget(
             title: 'PHONE',
-            subtitle: profileModel.username,
+            subtitle: profileEntity.username,
             trailing: IconButton(
               onPressed: () {
                 saveToClipboard(
                   context: context,
-                   phone: profileModel.username,
+                   phone: profileEntity.username,
                 );
               },
               icon: SvgPicture.asset(
@@ -44,15 +44,15 @@ class ProfileViewBody extends StatelessWidget {
           ),
           ProfileItemWidget(
             title: 'LEVEL',
-            subtitle: profileModel.experienceLevel,
+            subtitle: profileEntity.experienceLevel,
           ),
           ProfileItemWidget(
             title: 'Years of experience',
-            subtitle: '${profileModel.experienceYears} Years',
+            subtitle: '${profileEntity.experienceYears} Years',
           ),
           ProfileItemWidget(
             title: 'Location',
-            subtitle: profileModel.address,
+            subtitle: profileEntity.address,
           ),
         ],
       ),
